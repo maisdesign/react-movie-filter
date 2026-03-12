@@ -1,5 +1,5 @@
 
-function FilmsSelect({ genres, selectedGenre, setSelectedGenre }) {
+function GenreSelector({ genres, selectedGenre, setSelectedGenre }) {
     return <>
         <label htmlFor="genreSelectId">
             Scegli un genere cinematografico
@@ -13,4 +13,4 @@ function FilmsSelect({ genres, selectedGenre, setSelectedGenre }) {
     </>
 }
 
-export default FilmsSelect
+export default GenreSelector

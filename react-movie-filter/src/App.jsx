@@ -1,21 +1,21 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { films } from './data/films.js'
 import FilmsList from './components/FilmsList.jsx'
-import FilmsSelect from './components/FilmsSelect.jsx'
+import GenreSelector from './components/GenreSelector.jsx'
 
 function App() {
   const [list, setList] = useState(films);
-  const [genres, setGenres] = useState(films.map((film) => film.genre));
+  //const [genres, setGenres] = useState(films.map((film) => film.genre));
   const [selectedGenre, setSelectedGenre] = useState('Tutti');
-
+  const genres = films.map((film) => film.genre).filter((item, index, arr) => arr.indexOf(item) === index);
   const filteredList = selectedGenre === 'Tutti'
-    ? films
-    : films.filter(film => film.genre === selectedGenre)
+    ? list
+    : list.filter(film => film.genre === selectedGenre)
 
   return (
     <>
       <h1>React Movie Filter</h1>
-      <FilmsSelect genres={genres} selectedGenre={selectedGenre} setSelectedGenre={setSelectedGenre} list={list} setList={setList} />
+      <GenreSelector genres={genres} selectedGenre={selectedGenre} setSelectedGenre={setSelectedGenre} />
       <FilmsList list={filteredList} />
     </>
   )
