@@ -2,21 +2,26 @@ import { useState } from 'react';
 import { films } from './data/films.js'
 import FilmsList from './components/FilmsList.jsx'
 import GenreSelector from './components/GenreSelector.jsx'
+import FilmsSearch from './components/FilmsSearch.jsx'
+import FilmsAdd from './components/FilmsAdd.jsx'
 
 function App() {
   const [list, setList] = useState(films);
-  //const [genres, setGenres] = useState(films.map((film) => film.genre));
   const [selectedGenre, setSelectedGenre] = useState('Tutti');
-  const genres = films.map((film) => film.genre).filter((item, index, arr) => arr.indexOf(item) === index);
-  const filteredList = selectedGenre === 'Tutti'
-    ? list
-    : list.filter(film => film.genre === selectedGenre)
+  const genres = list.map((film) => film.genre).filter((item, index, arr) => arr.indexOf(item) === index);
+  const [searchQuery, setSearchQuery] = useState('');
+  const filteredList = list.filter(film => ((film.genre === selectedGenre || selectedGenre === 'Tutti') && film.title.toLowerCase().includes(searchQuery.toLowerCase())));
+
 
   return (
     <>
       <h1>React Movie Filter</h1>
-      <GenreSelector genres={genres} selectedGenre={selectedGenre} setSelectedGenre={setSelectedGenre} />
+      <div className="controls">
+        <GenreSelector genres={genres} selectedGenre={selectedGenre} setSelectedGenre={setSelectedGenre} />
+        <FilmsSearch searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+      </div>
       <FilmsList list={filteredList} />
+      <FilmsAdd setList={setList} />
     </>
   )
 }
